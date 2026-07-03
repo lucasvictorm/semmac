@@ -9,53 +9,98 @@
     <!-- Font Awesome para Ícones -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+
 <body class="bg-gray-50 text-gray-800 font-sans antialiased">
 
     <!-- CABEÇALHO / NAVBAR (APENAS LINKS) -->
     <header class="bg-white shadow-sm sticky top-0 z-50 border-b border-gray-200">
-    <nav class="max-w-7xl mx-auto px-6 py-4 flex flex-col md:flex-row justify-between items-center gap-6">
+    <nav class="max-w-7xl mx-auto px-6 py-4">
 
-        <!-- Logo -->
-        <a href="#" class="flex items-center gap-3">
-            <i class="fa-solid fa-seedling text-2xl text-green-700"></i>
-            <div>
-                <p class="text-xs font-bold uppercase tracking-wider text-gray-400">
-                    Prefeitura Municipal
-                </p>
-                <p class="text-lg font-extrabold text-green-800 leading-tight">
-                    Secretaria de Meio Ambiente
-                </p>
-            </div>
-        </a>
+        <div class="flex justify-between items-center">
 
-        <!-- Navegação -->
-        <ul class="flex flex-col sm:flex-row items-center gap-8">
+            <!-- Logo -->
+            <a href="#" class="flex items-center gap-3">
+                <i class="fa-solid fa-seedling text-2xl text-green-700"></i>
+                <div>
+                    <p class="text-xs font-bold uppercase tracking-wider text-gray-400">
+                        Prefeitura Municipal
+                    </p>
+                    <p class="text-lg font-extrabold text-green-800 leading-tight">
+                        Secretaria de Meio Ambiente
+                    </p>
+                </div>
+            </a>
 
-            <li>
-                <a href="./mapa.html"
-                    class="flex flex-col items-center text-center text-gray-600 hover:text-green-700 transition group">
-                    <i class="fa-solid fa-map-location-dot text-2xl mb-2 group-hover:scale-110 transition-transform"></i>
-                    <span class="font-semibold">Ver Rota do Carro do Lixo</span>
-                </a>
-            </li>
+            <!-- Botão Mobile -->
+            <button id="menuBtn"
+                class="md:hidden text-2xl text-green-800">
+                <i class="fa-solid fa-bars"></i>
+            </button>
 
-            <li>
-                <a href="./solicitacao.html"
-                    class="flex flex-col items-center text-center text-gray-600 hover:text-green-700 transition group">
-                    <i class="fa-solid fa-file-signature text-2xl mb-2 group-hover:scale-110 transition-transform"></i>
-                    <span class="font-semibold">Pedir Serviços</span>
-                </a>
-            </li>
+            <!-- Menu Desktop -->
+            <ul class="hidden md:flex items-center gap-10">
 
-            <li>
-                <a href="./denuncia.html"
-                    class="flex flex-col items-center text-center text-gray-600 hover:text-red-600 transition group">
-                    <i class="fa-solid fa-bullhorn text-2xl mb-2 group-hover:scale-110 transition-transform"></i>
-                    <span class="font-semibold">Fazer uma Denúncia</span>
-                </a>
-            </li>
+                <li>
+                    <a href="./mapa.html"
+                        class="flex flex-col items-center text-center text-gray-600 hover:text-green-700 transition group">
+                        <i class="fa-solid fa-map-location-dot text-2xl mb-2 group-hover:scale-110 transition-transform"></i>
+                        <span class="font-semibold">Coleta de Lixo</span>
+                    </a>
+                </li>
 
-        </ul>
+                <li>
+                    <a href="./solicitacao.html"
+                        class="flex flex-col items-center text-center text-gray-600 hover:text-green-700 transition group">
+                        <i class="fa-solid fa-file-signature text-2xl mb-2 group-hover:scale-110 transition-transform"></i>
+                        <span class="font-semibold">Pedir Serviços</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="./denuncia.html"
+                        class="flex flex-col items-center text-center text-gray-600 hover:text-red-600 transition group">
+                        <i class="fa-solid fa-bullhorn text-2xl mb-2 group-hover:scale-110 transition-transform"></i>
+                        <span class="font-semibold">Fazer Denúncia</span>
+                    </a>
+                </li>
+
+            </ul>
+
+        </div>
+
+        <!-- Menu Mobile -->
+        <div id="mobileMenu" class="hidden md:hidden mt-6">
+
+            <ul class="flex flex-col gap-5">
+
+                <li>
+                    <a href="./mapa.html"
+                        class="flex items-center gap-4 p-3 rounded-lg hover:bg-green-50">
+                        <i class="fa-solid fa-map-location-dot text-xl text-green-700"></i>
+                        <span class="font-semibold">Ver Rota do Carro do Lixo</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="./solicitacao.html"
+                        class="flex items-center gap-4 p-3 rounded-lg hover:bg-green-50">
+                        <i class="fa-solid fa-file-signature text-xl text-green-700"></i>
+                        <span class="font-semibold">Pedir Serviços</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="./denuncia.html"
+                        class="flex items-center gap-4 p-3 rounded-lg hover:bg-red-50">
+                        <i class="fa-solid fa-bullhorn text-xl text-red-600"></i>
+                        <span class="font-semibold">Fazer uma Denúncia</span>
+                    </a>
+                </li>
+
+            </ul>
+
+        </div>
+
     </nav>
 </header>
 
@@ -87,7 +132,7 @@
                 <div class="text-4xl text-green-600 mb-4">
                     <i class="fa-solid fa-earth-americas"></i>
                 </div>
-                <h3 class="text-xl font-bold text-gray-900 mb-3">Mapa Interativo</h3>
+                <h3 class="text-xl font-bold text-gray-900 mb-3">Coleta de Lixo</h3>
                 <p class="text-gray-600 text-sm leading-relaxed mb-6 flex-grow">
                     Consulte as rotas e horários da coleta de lixo.
                 </p>
@@ -130,8 +175,24 @@
     <!-- RODAPÉ -->
     <footer class="bg-gray-900 text-gray-400 text-center py-8 text-sm border-t border-gray-800">
         <p class="mb-1">&copy; 2026 Secretaria Municipal de Meio Ambiente. Todos os direitos reservados.</p>
-        <p>Desenvolvido para fins de transparência e engajamento ecológico.</p>
+      
     </footer>
+    <script>
+    const menuBtn = document.getElementById("menuBtn");
+    const mobileMenu = document.getElementById("mobileMenu");
+    const icon = menuBtn.querySelector("i");
 
+    menuBtn.addEventListener("click", () => {
+        mobileMenu.classList.toggle("hidden");
+
+        if (mobileMenu.classList.contains("hidden")) {
+            icon.classList.remove("fa-xmark");
+            icon.classList.add("fa-bars");
+        } else {
+            icon.classList.remove("fa-bars");
+            icon.classList.add("fa-xmark");
+        }
+    });
+</script>
 </body>
 </html>
