@@ -9,26 +9,102 @@
 </head>
 <body class="bg-slate-100 min-h-screen flex flex-col font-sans">
 
-    <header class="bg-[#00875a] text-white py-4 px-6 shadow-md">
-        <div class="max-w-6xl mx-auto flex justify-between items-center">
-            <div class="flex items-center gap-3">
-                <i class="fa-solid fa-leaf text-2xl -rotate-12"></i>
+    <header class="bg-white shadow-sm sticky top-0 z-50 border-b border-gray-200">
+    <nav class="max-w-7xl mx-auto px-6 py-4">
+
+        <div class="flex justify-between items-center">
+
+            <!-- Logo -->
+            <a href="./index.html" class="flex items-center gap-3">
+                <i class="fa-solid fa-seedling text-2xl text-green-700"></i>
                 <div>
-                    <h1 class="text-lg font-bold leading-tight">Meio Ambiente</h1>
-                    <p class="text-xs opacity-90">Portal de Serviços</p>
+                    <p class="text-xs font-bold uppercase tracking-wider text-gray-400">
+                        Prefeitura Municipal
+                    </p>
+                    <p class="text-lg font-extrabold text-green-800 leading-tight">
+                        Secretaria de Meio Ambiente
+                    </p>
                 </div>
-            </div>
-            <button class="bg-white/15 hover:bg-white/25 text-xs font-semibold py-2 px-4 rounded-full transition-colors">
-                Atendimento Digital
+            </a>
+
+            <!-- Botão Mobile -->
+            <button id="menuBtn"
+                class="md:hidden text-2xl text-green-800">
+                <i class="fa-solid fa-bars"></i>
             </button>
+
+            <!-- Menu Desktop -->
+            <ul class="hidden md:flex items-center gap-10">
+
+                <li>
+                    <a href="./mapa.html"
+                        class="flex flex-col items-center text-center text-gray-600 hover:text-green-700 transition group">
+                        <i class="fa-solid fa-map-location-dot text-2xl mb-2 group-hover:scale-110 transition-transform"></i>
+                        <span class="font-semibold">Coleta de Lixo</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="./TelaLogin.html"
+                        class="flex flex-col items-center text-center text-gray-600 hover:text-green-700 transition group">
+                        <i class="fa-solid fa-file-signature text-2xl mb-2 group-hover:scale-110 transition-transform"></i>
+                        <span class="font-semibold">Pedir Serviços</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="./denuncia.html"
+                        class="flex flex-col items-center text-center text-gray-600 hover:text-red-600 transition group">
+                        <i class="fa-solid fa-bullhorn text-2xl mb-2 group-hover:scale-110 transition-transform"></i>
+                        <span class="font-semibold">Fazer Denúncia</span>
+                    </a>
+                </li>
+
+            </ul>
+
         </div>
-    </header>
+
+        <!-- Menu Mobile -->
+        <div id="mobileMenu" class="hidden md:hidden mt-6">
+
+            <ul class="flex flex-col gap-5">
+
+                <li>
+                    <a href="./mapa.html"
+                        class="flex items-center gap-4 p-3 rounded-lg hover:bg-green-50">
+                        <i class="fa-solid fa-map-location-dot text-xl text-green-700"></i>
+                        <span class="font-semibold">Ver Rota do Carro do Lixo</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="./solicitacao.html"
+                        class="flex items-center gap-4 p-3 rounded-lg hover:bg-green-50">
+                        <i class="fa-solid fa-file-signature text-xl text-green-700"></i>
+                        <span class="font-semibold">Pedir Serviços</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="./denuncia.html"
+                        class="flex items-center gap-4 p-3 rounded-lg hover:bg-red-50">
+                        <i class="fa-solid fa-bullhorn text-xl text-red-600"></i>
+                        <span class="font-semibold">Fazer uma Denúncia</span>
+                    </a>
+                </li>
+
+            </ul>
+
+        </div>
+
+    </nav>
+</header>
 
     <main class="flex-1 flex items-center justify-center p-4">
         <div class="w-full max-w-md bg-white rounded-lg shadow-lg overflow-hidden">
             
             <div class="bg-[#0f172a] text-white p-6 text-center sm:text-left">
-                <h2 class="text-xl font-semibold mb-2">Entrar na sua área restrita</h2>
+                <h2 class="text-xl font-semibold mb-2">Entrar na sua conta</h2>
                 <p class="text-sm text-slate-400 leading-relaxed">
                     Informe seu CPF e senha para acessar suas solicitações e processos.
                 </p>
@@ -114,17 +190,36 @@
 
             // Processamento do Envio
             loginForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                const cleanCpf = cpfInput.value.replace(/\D/g, '');
-                
-                if (cleanCpf.length !== 11) {
-                    alert('Por favor, insira um CPF válido com 11 dígitos.');
-                    return;
-                }
+    e.preventDefault();
 
-                alert('Validando credenciais de acesso...');
-            });
+    const cleanCpf = cpfInput.value.replace(/\D/g, '');
+
+    if (cleanCpf.length !== 11) {
+        alert('Por favor, insira um CPF válido com 11 dígitos.');
+        return;
+    }
+
+    // Redireciona para outra página
+    window.location.href = './solicitacao.html';
+});
         });
     </script>
+    <script>
+    const menuBtn = document.getElementById("menuBtn");
+    const mobileMenu = document.getElementById("mobileMenu");
+    const icon = menuBtn.querySelector("i");
+
+    menuBtn.addEventListener("click", () => {
+        mobileMenu.classList.toggle("hidden");
+
+        if (mobileMenu.classList.contains("hidden")) {
+            icon.classList.remove("fa-xmark");
+            icon.classList.add("fa-bars");
+        } else {
+            icon.classList.remove("fa-bars");
+            icon.classList.add("fa-xmark");
+        }
+    });
+</script>
 </body>
 </html>
