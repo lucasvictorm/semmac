@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Denúncia - Secretaria de Meio Ambiente</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col">
+
+    <header class="bg-emerald-600 text-white shadow-md">
+        <div class="max-w-5xl mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <i data-lucide="shield-alert" class="w-8 h-8 text-emerald-200"></i>
+                <div>
+                    <h1 class="text-xl font-bold leading-tight">Meio Ambiente</h1>
+                    <p class="text-xs text-emerald-100">Portal de Denúncias Ambientais</p>
+                </div>
+            </div>
+            <span class="text-xs bg-emerald-700 px-3 py-1 rounded-full font-medium">Atendimento Digital</span>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-5xl w-full mx-auto px-4 py-8">
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+            
+            <div class="bg-slate-900 text-white p-6 sm:p-8">
+                <h2 class="text-2xl font-bold mb-2">Registro de Denúncia</h2>
+                <p class="text-slate-400 text-sm max-w-2xl">
+                    Utilize este canal de forma segura para relatar infrações ambientais, como queimadas irregulares e poluição sonora. 
+                </p>
+            </div>
+
+            <form id="denunciaForm" action="#" method="POST" enctype="multipart/form-data" class="p-6 sm:p-8 space-y-8">
+                
+                <div class="space-y-4">
+                    <h3 class="text-lg font-semibold text-slate-900 flex items-center gap-2 border-b pb-2 border-slate-100">
+                        <i data-lucide="alert-triangle" class="w-5 h-5 text-emerald-600"></i>
+                        1. Tipo de Infração
+                    </h3>
+                    
+                    <div class="grid grid-cols-1 gap-6">
+                        <div>
+                            <label for="tipo_denuncia" class="block text-sm font-medium text-slate-700 mb-1">Selecione a infração identificada *</label>
+                            <select id="tipo_denuncia" name="tipo_denuncia" required class="w-full rounded-lg border border-slate-200 p-2.5 bg-white shadow-sm focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 focus:outline-none">
+                                <option value="" disabled selected>Escolha uma opção...</option>
+                                <option value="queimada">🔥 Queimada Irregular / Fumaça Tóxica</option>
+                                <option value="poluicao_sonora">🔊 Poluição Sonora / Perturbação do Sossego</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <h3 class="text-lg font-semibold text-slate-900 flex items-center gap-2 border-b pb-2 border-slate-100">
+                        <i data-lucide="map-pin" class="w-5 h-5 text-emerald-600"></i>
+                        2. Localização do Ocorrido
+                    </h3>
+                    
+                    <p class="text-xs text-slate-500">Clique ou arraste o marcador no mapa para indicar o local exato da infração.</p>
+
+                    <div id="map" class="w-full h-64 rounded-xl border border-slate-200 shadow-inner z-10"></div>
+
+                    <div class="space-y-4">
+                        <div>
+                            <label for="endereco" class="block text-sm font-medium text-slate-700 mb-1">Endereço Identificado *</label>
+                            <input type="text" id="endereco" name="endereco" required placeholder="Buscando endereço no mapa..." class="w-full rounded-lg border border-slate-200 p-2.5 shadow-sm bg-slate-50 text-slate-600 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 focus:outline-none">
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="md:col-span-2">
+                                <label for="referencia" class="block text-sm font-medium text-slate-700 mb-1">Ponto de Referência *</label>
+                                <input type="text" id="referencia" name="referencia" required placeholder="Ex: Casa de muro azul, terreno baldio ao lado do mercado..." class="w-full rounded-lg border border-slate-200 p-2.5 shadow-sm focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 focus:outline-none">
+                            </div>
+                            
+                            <div class="grid grid-cols-2 gap-2">
+                                <div>
+                                    <label class="block text-xs font-medium text-slate-500 mb-1">Latitude</label>
+                                    <input type="text" id="lat" name="latitude" readonly class="w-full rounded-lg border border-slate-100 bg-slate-50 p-2.5 text-xs text-slate-500 cursor-not-allowed">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-medium text-slate-500 mb-1">Longitude</label>
+                                    <input type="text" id="lng" name="longitude" readonly class="w-full rounded-lg border border-slate-100 bg-slate-50 p-2.5 text-xs text-slate-500 cursor-not-allowed">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <h3 class="text-lg font-semibold text-slate-900 flex items-center gap-2 border-b pb-2 border-slate-100">
+                        <i data-lucide="paperclip" class="w-5 h-5 text-emerald-600"></i>
+                        3. Detalhes e Evidências
+                    </h3>
+
+                    <div>
+                        <label for="descricao" class="block text-sm font-medium text-slate-700 mb-1">Descrição detalhada da denúncia *</label>
+                        <textarea id="descricao" name="descricao" rows="4" required placeholder="Detalhe a situação (ex: dias e horários que o problema ocorre, características do infrator, volume do som, etc.)" class="w-full rounded-lg border border-slate-200 p-2.5 shadow-sm focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 focus:outline-none"></textarea>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1">Anexar Fotos ou Provas (Máx: 3 fotos)</label>
+                        <div class="mt-1 flex flex-col items-center justify-center px-6 pt-5 pb-6 border-2 border-slate-300 border-dashed rounded-xl hover:border-emerald-500 transition-colors bg-slate-50 relative">
+                            <div class="space-y-1 text-center">
+                                <i data-lucide="image-plus" class="mx-auto h-10 w-10 text-slate-400"></i>
+                                <div class="flex text-sm text-slate-600 justify-center">
+                                    <label for="fotos" class="relative cursor-pointer rounded-md font-medium text-emerald-600 hover:text-emerald-500 focus-within:outline-none">
+                                        <span>Clique para anexar arquivos</span>
+                                        <input id="fotos" name="fotos[]" type="file" multiple accept="image/*" class="sr-only">
+                                    </label>
+                                </div>
+                                <p class="text-xs text-slate-500">PNG, JPG, JPEG até 5MB cada</p>
+                            </div>
+                            
+                            <div id="imagePreviewContainer" class="flex gap-4 mt-4 flex-wrap justify-center w-full"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col sm:flex-row justify-end gap-3 pt-4 border-t border-slate-100">
+                    <button type="submit" class="px-6 py-3 rounded-lg bg-emerald-600 text-white font-bold hover:bg-emerald-700 shadow-sm transition-colors flex items-center justify-center gap-2 w-full sm:w-auto">
+                        <i data-lucide="send" class="w-5 h-5"></i>
+                        Registrar Denúncia
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <div id="modal-sucesso" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+            <div class="bg-white rounded-2xl p-6 sm:p-8 max-w-md w-full shadow-xl border border-slate-100 text-center transform scale-95 transition-all animate-in fade-in zoom-in-95 duration-200">
+                <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-emerald-50 mb-4 animate-bounce">
+                    <i data-lucide="check-circle-2" class="h-10 w-10 text-emerald-600"></i>
+                </div>
+                <h3 class="text-xl font-bold text-slate-900 mb-2">Denúncia Registrada!</h3>
+                <p class="text-sm text-slate-500 mb-6">
+                    Sua demanda para a Secretaria de Meio Ambiente foi registrada com sucesso no nosso Portal de Atendimento Digital. Garantimos total sigilo das informações.
+                </p>
+                <button id="fechar-modal" type="button" class="w-full py-2.5 px-4 bg-emerald-600 hover:bg-emerald-700 text-white font-medium rounded-xl shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2">
+                    Entendido
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-slate-900 text-slate-400 text-center py-4 text-xs border-t border-slate-800 mt-auto">
+        &copy; 2026 Secretaria Municipal de Meio Ambiente. Todos os direitos reservados.
+    </footer>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        // Inicializa Ícones Lucide
+        lucide.createIcons();
+
+        /* =========================================
+           MAPA E ENDEREÇO (API NOMINATIM)
+           ========================================= */
+        const cidadeLat = -2.0000; 
+        const cidadeLng = -47.9500; 
+
+        // Limites para manter a denúncia dentro do município
+        const limitesMunicipio = L.latLngBounds(
+            L.latLng(cidadeLat - 0.15, cidadeLng - 0.15), 
+            L.latLng(cidadeLat + 0.15, cidadeLng + 0.15)  
+        );
+
+        const map = L.map('map', {
+            center: [cidadeLat, cidadeLng],
+            zoom: 14,
+            minZoom: 12, 
+            maxBounds: limitesMunicipio,
+            maxBoundsViscosity: 1.0 
+        });
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+
+        let marker = L.marker([cidadeLat, cidadeLng], { draggable: true }).addTo(map);
+
+        function updateInputs(lat, lng) {
+            document.getElementById('lat').value = lat.toFixed(6);
+            document.getElementById('lng').value = lng.toFixed(6);
+        }
+        
+        function buscarEnderecoPorCoordenadas(lat, lng) {
+            const inputEndereco = document.getElementById('endereco');
+            inputEndereco.value = "Buscando endereço na base de dados... ⏳";
+
+            fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data && data.display_name) {
+                        let partes = data.address;
+                        let rua = partes.road || partes.pedestrian || partes.suburb || "Via sem nome identificável";
+                        let bairro = partes.neighbourhood || partes.suburb || "";
+                        let cidade = partes.city || partes.town || "Concórdia do Pará";
+                        
+                        inputEndereco.value = `${rua}${bairro ? ', ' + bairro : ''} - ${cidade}`;
+                    } else {
+                        inputEndereco.value = "Endereço não localizado, mas as coordenadas foram salvas.";
+                    }
+                })
+                .catch(() => {
+                    inputEndereco.value = "Erro ao buscar endereço, mas as coordenadas foram salvas.";
+                });
+        }
+
+        // Execução Inicial
+        updateInputs(cidadeLat, cidadeLng);
+        buscarEnderecoPorCoordenadas(cidadeLat, cidadeLng);
+
+        function gerenciarMarcacao(lat, lng) {
+            if (limitesMunicipio.contains([lat, lng])) {
+                marker.setLatLng([lat, lng]);
+                updateInputs(lat, lng);
+                buscarEnderecoPorCoordenadas(lat, lng);
+            } else {
+                alert("Por favor, selecione um local de ocorrência dentro dos limites do município.");
+            }
+        }
+
+        // Eventos de clique e arraste no mapa
+        map.on('click', function(e) {
+            gerenciarMarcacao(e.latlng.lat, e.latlng.lng);
+        });
+
+        marker.on('dragend', function(e) {
+            const position = marker.getLatLng();
+            gerenciarMarcacao(position.lat, position.lng);
+        });
+
+        // Geolocalização Automática (Opcional)
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                const userLat = position.coords.latitude;
+                const userLng = position.coords.longitude;
+                
+                if (limitesMunicipio.contains([userLat, userLng])) {
+                    map.setView([userLat, userLng], 16);
+                    marker.setLatLng([userLat, userLng]);
+                    updateInputs(userLat, userLng);
+                    buscarEnderecoPorCoordenadas(userLat, userLng);
+                }
+            });
+        }
+
+        /* =========================================
+           PREVIEW DE IMAGENS
+           ========================================= */
+        const fotoInput = document.getElementById('fotos');
+        const previewContainer = document.getElementById('imagePreviewContainer');
+
+        fotoInput.addEventListener('change', function(e) {
+            previewContainer.innerHTML = ''; // Limpa previews antigos
+            const files = e.target.files;
+
+            if (files) {
+                // Limita a exibição/leitura a 3 arquivos
+                const numFiles = Math.min(files.length, 3);
+                
+                for (let i = 0; i < numFiles; i++) {
+                    const file = files[i];
+                    if (file.type.match('image.*')) {
+                        const reader = new FileReader();
+                        
+                        reader.onload = function(event) {
+                            const img = document.createElement('img');
+                            img.src = event.target.result;
+                            // Classes Tailwind para deixar a imagem esteticamente agradável
+                            img.className = "h-24 w-24 object-cover rounded-lg border border-slate-200 shadow-sm transition-transform hover:scale-105";
+                            previewContainer.appendChild(img);
+                        }
+                        
+                        reader.readAsDataURL(file);
+                    }
+                }
+            }
+        });
+
+        /* =========================================
+           MODAL E ENVIO DO FORMULÁRIO
+           ========================================= */
+        const modal = document.getElementById('modal-sucesso');
+        const btnFecharModal = document.getElementById('fechar-modal');
+
+        document.getElementById('denunciaForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // Impede o recarregamento da página para demonstração
+            
+            // Exibe o modal
+            modal.classList.remove('hidden');
+            lucide.createIcons(); // Recarrega ícones caso necessário
+
+            // Reseta o formulário
+            this.reset();
+            previewContainer.innerHTML = ''; // Limpa as fotos
+            
+            // Reseta o mapa para o estado inicial
+            marker.setLatLng([cidadeLat, cidadeLng]);
+            map.setView([cidadeLat, cidadeLng], 14);
+            updateInputs(cidadeLat, cidadeLng);
+            buscarEnderecoPorCoordenadas(cidadeLat, cidadeLng);
+        });
+
+        // Fechar Modal
+        btnFecharModal.addEventListener('click', function() {
+            modal.classList.add('hidden');
+        });
+    </script>
+</body>
+</html>
