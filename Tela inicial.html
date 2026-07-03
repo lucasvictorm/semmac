@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secretaria Municipal de Meio Ambiente</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome para Ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans antialiased">
+
+    <!-- CABEÇALHO / NAVBAR (APENAS LINKS) -->
+    <header class="bg-white shadow-sm sticky top-0 z-50 border-b border-gray-200">
+        <nav class="max-w-7xl mx-auto px-6 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+            
+            <!-- Logo e Identificação -->
+            <a href="#" class="flex items-center gap-3 text-center md:text-left">
+                <i class="fa-solid fa-seedling text-2xl text-green-700"></i>
+                <div>
+                    <span class="block text-xs font-bold uppercase tracking-wider text-gray-400">Prefeitura Municipal</span>
+                    <span class="block text-lg font-extrabold text-green-800 leading-tight">Secretaria de Meio Ambiente</span>
+                </div>
+            </a>
+            
+            <!-- Links de Navegação Simples -->
+            <ul class="flex flex-col sm:flex-row items-start sm:items-center gap-6 md:gap-8">
+                
+                <!-- Link: Mapa -->
+                <li>
+                    <a href="#mapa" class="flex items-start gap-2.5 text-gray-600 hover:text-green-700 transition group">
+                        <i class="fa-solid fa-map-location-dot text-lg mt-0.5 group-hover:scale-110 transition-transform"></i>
+                        <div>
+                            <span class="block font-bold text-sm text-gray-900 group-hover:text-green-700">Ver Mapa da Cidade</span>
+                            <span class="block text-xs text-gray-400">Áreas verdes e matas</span>
+                        </div>
+                    </a>
+                </li>
+                
+                <!-- Link: Solicitações -->
+                <li>
+                    <a href="#solicitacoes" class="flex items-start gap-2.5 text-gray-600 hover:text-green-700 transition group">
+                        <i class="fa-solid fa-file-signature text-lg mt-0.5 group-hover:scale-110 transition-transform"></i>
+                        <div>
+                            <span class="block font-bold text-sm text-gray-900 group-hover:text-green-700">Pedir Serviços e Licenças</span>
+                            <span class="block text-xs text-gray-400">Autorizações e podas</span>
+                        </div>
+                    </a>
+                </li>
+                
+                <!-- Link: Denúncias -->
+                <li>
+                    <a href="#denuncias" class="flex items-start gap-2.5 text-gray-600 hover:text-red-600 transition group">
+                        <i class="fa-solid fa-bullhorn text-lg mt-0.5 group-hover:text-red-600"></i>
+                        <div>
+                            <span class="block font-bold text-sm text-gray-900 group-hover:text-red-600">Fazer uma Denúncia</span>
+                            <span class="block text-xs text-gray-400">Reportar crimes ambientais</span>
+                        </div>
+                    </a>
+                </li>
+                
+            </ul>
+        </nav>
+    </header>
+
+    <!-- SEÇÃO PRINCIPAL (HERO) -->
+    <section class="relative bg-gradient-to-br from-green-800/90 to-green-950/95 text-white py-20 px-4 text-center overflow-hidden">
+        <div class="absolute inset-0 z-0 bg-[url('https://images.unsplash.com/photo-1502082553048-f009c37129b9?ixlib=rb-4.0.3')] bg-cover bg-center mix-blend-overlay opacity-30"></div>
+        <div class="relative z-10 max-w-3xl mx-auto">
+            <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight mb-4">
+                Portal de Serviços Ambientais
+            </h1>
+            <p class="text-lg text-green-100 leading-relaxed">
+                Bem-vindo à plataforma digital da Secretaria Municipal de Meio Ambiente. Aqui você tem acesso simplificado a ferramentas de fiscalização, licenciamento e monitoramento ecológico do nosso município.
+            </p>
+        </div>
+    </section>
+
+    <!-- SEÇÃO DE SERVIÇOS DISPONÍVEIS -->
+    <section class="max-w-7xl mx-auto px-6 py-16">
+        <div class="text-center mb-12">
+            <h2 class="text-2xl sm:text-3xl font-bold text-green-900 mb-2">O que você pode fazer aqui?</h2>
+            <p class="text-gray-600">Escolha uma das opções abaixo para resolver o que precisa</p>
+        </div>
+
+        <!-- Grid de Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            
+            <!-- Card: Mapa -->
+            <div id="mapa" class="bg-white p-8 rounded-xl shadow-sm border-t-4 border-transparent hover:border-green-500 hover:shadow-md transition duration-300 flex flex-col items-center text-center">
+                <div class="text-4xl text-green-600 mb-4">
+                    <i class="fa-solid fa-earth-americas"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-3">Mapa Interativo</h3>
+                <p class="text-gray-600 text-sm leading-relaxed mb-6 flex-grow">
+                    Explore as áreas de preservação, cobertura vegetal, bacias hidrográficas e os pontos de monitoramento ambiental do município em tempo real.
+                </p>
+                <a href="#" class="w-full sm:w-auto inline-block bg-green-700 text-white font-medium px-6 py-2.5 rounded-md hover:bg-green-800 transition">
+                    Visualizar Mapa
+                </a>
+            </div>
+
+            <!-- Card: Solicitações -->
+            <div id="solicitacoes" class="bg-white p-8 rounded-xl shadow-sm border-t-4 border-transparent hover:border-green-500 hover:shadow-md transition duration-300 flex flex-col items-center text-center">
+                <div class="text-4xl text-green-600 mb-4">
+                    <i class="fa-solid fa-file-signature"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-3">Solicitações e Licenças</h3>
+                <p class="text-gray-600 text-sm leading-relaxed mb-6 flex-grow">
+                    Abra e acompanhe requerimentos de licenciamento ambiental, autorizações para podas de árvores, projetos de manejo ou emissão de certidões.
+                </p>
+                <a href="#" class="w-full sm:w-auto inline-block bg-green-700 text-white font-medium px-6 py-2.5 rounded-md hover:bg-green-800 transition">
+                    Iniciar Pedido
+                </a>
+            </div>
+
+            <!-- Card: Denúncias -->
+            <div id="denuncias" class="bg-white p-8 rounded-xl shadow-sm border-t-4 border-transparent hover:border-red-500 hover:shadow-md transition duration-300 flex flex-col items-center text-center">
+                <div class="text-4xl text-red-600 mb-4">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-3">Denúncias Ambientais</h3>
+                <p class="text-gray-600 text-sm leading-relaxed mb-6 flex-grow">
+                    Ajude a proteger nossa biodiversidade. Registre de forma anônima ou identificada casos de desmatamento ilegal, poluição sonora ou queimadas.
+                </p>
+                <a href="#" class="w-full sm:w-auto inline-block bg-red-600 text-white font-medium px-6 py-2.5 rounded-md hover:bg-red-700 transition">
+                    Registrar Denúncia
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- RODAPÉ -->
+    <footer class="bg-gray-900 text-gray-400 text-center py-8 text-sm border-t border-gray-800">
+        <p class="mb-1">&copy; 2026 Secretaria Municipal de Meio Ambiente. Todos os direitos reservados.</p>
+        <p>Desenvolvido para fins de transparência e engajamento ecológico.</p>
+    </footer>
+
+</body>
+</html>
