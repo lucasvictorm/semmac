@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solicitação de Serviço - Secretaria de Meio Ambiente</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col">
+
+    <header class="bg-emerald-600 text-white shadow-md">
+        <div class="max-w-5xl mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <i data-lucide="leaf" class="w-8 h-8 text-emerald-200"></i>
+                <div>
+                    <h1 class="text-xl font-bold leading-tight">Meio Ambiente</h1>
+                    <p class="text-xs text-emerald-100">Portal de Solicitações Urbanas</p>
+                </div>
+            </div>
+            <span class="text-xs bg-emerald-700 px-3 py-1 rounded-full font-medium">Atendimento Digital</span>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-5xl w-full mx-auto px-4 py-8">
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+            
+            <div class="bg-slate-900 text-white p-6 sm:p-8">
+                <h2 class="text-2xl font-bold mb-2">Nova Solicitação de Serviço</h2>
+                <p class="text-slate-400 text-sm max-w-2xl">
+                    Utilize este canal para solicitar manutenções, vistorias, podas e outras ações preventivas ou corretivas da Secretaria de Meio Ambiente no seu bairro.
+                </p>
+            </div>
+
+            <form action="#" method="POST" enctype="multipart/form-data" class="p-6 sm:p-8 space-y-8">
+                
+                <div class="space-y-4">
+                    <h3 class="text-lg font-semibold text-slate-900 flex items-center gap-2 border-b pb-2 border-slate-100">
+                        <i data-lucide="clipboard-list" class="w-5 h-5 text-emerald-600"></i>
+                        1. Tipo de Solicitação
+                    </h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="tipo_servico" class="block text-sm font-medium text-slate-700 mb-1">Selecione o serviço desejado *</label>
+                            <select id="tipo_servico" name="tipo_servico" required class="w-full rounded-lg border border-slate-200 p-2.5 bg-white shadow-sm focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 focus:outline-none">
+                                <option value="" disabled selected>Escolha uma opção...</option>
+                                <option value="poda_arvore">Poda de Árvore em Área Pública</option>
+                                <option value="supressao_arvore">Avaliação para Supressão (Corte) de Árvore com Risco</option>
+                                <option value="plantio_mudas">Solicitação de Plantio / Doação de Mudas</option>
+                                <option value="coleta_seletiva">Agendamento ou Dúvidas sobre Coleta Seletiva</option>
+                                <option value="revitalizacao_praca">Revitalização de Áreas Verdes / Praças</option>
+                                <option value="vistoria_tecnica">Vistoria Técnica Ambiental Preventiva</option>
+                                <option value="outros_servicos">Outros Serviços Gerais</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label for="titulo" class="block text-sm font-medium text-slate-700 mb-1">Resumo do problem (Título) *</label>
+                            <input type="text" id="titulo" name="titulo" required placeholder="Ex: Poda de árvore tocando na fiação" class="w-full rounded-lg border border-slate-200 p-2.5 shadow-sm focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 focus:outline-none">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+    <h3 class="text-lg font-semibold text-slate-900 flex items-center gap-2 border-b pb-2 border-slate-100">
+        <i data-lucide="map-pin" class="w-5 h-5 text-emerald-600"></i>
+        2. Localização do Ocorrido
+    </h3>
+    
+    <p class="text-xs text-slate-500">Clique no mapa para marcar o local exato. O endereço será preenchido automaticamente.</p>
+
+    <div id="map" class="w-full h-64 rounded-xl border border-slate-200 shadow-inner z-10"></div>
+
+    <div class="space-y-4">
+        <div>
+            <label for="endereco" class="block text-sm font-medium text-slate-700 mb-1">Endereço Completo *</label>
+            <input type="text" id="endereco" name="endereco" required placeholder="Buscando endereço no mapa..." class="w-full rounded-lg border border-slate-200 p-2.5 shadow-sm bg-slate-50 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 focus:outline-none">
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="md:col-span-2">
+                <label for="referencia" class="block text-sm font-medium text-slate-700 mb-1">Ponto de Referência *</label>
+                <input type="text" id="referencia" name="referencia" required placeholder="Ex: Próximo à padaria, em frente à escola" class="w-full rounded-lg border border-slate-200 p-2.5 shadow-sm focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 focus:outline-none">
+            </div>
+            
+            <div class="grid grid-cols-2 gap-2">
+                <div>
+                    <label class="block text-xs font-medium text-slate-500 mb-1">Latitude</label>
+                    <input type="text" id="lat" name="latitude" readonly class="w-full rounded-lg border border-slate-100 bg-slate-50 p-2.5 text-xs text-slate-500 cursor-not-allowed">
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-slate-500 mb-1">Longitude</label>
+                    <input type="text" id="lng" name="longitude" readonly class="w-full rounded-lg border border-slate-100 bg-slate-50 p-2.5 text-xs text-slate-500 cursor-not-allowed">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+                <div class="space-y-4">
+                    <h3 class="text-lg font-semibold text-slate-900 flex items-center gap-2 border-b pb-2 border-slate-100">
+                        <i data-lucide="paperclip" class="w-5 h-5 text-emerald-600"></i>
+                        3. Detalhes e Evidências
+                    </h3>
+
+                    <div>
+                        <label for="descricao" class="block text-sm font-medium text-slate-700 mb-1">Descrição detalhada *</label>
+                        <textarea id="descricao" name="descricao" rows="4" required placeholder="Descreva com detalhes a sua necessidade..." class="w-full rounded-lg border border-slate-200 p-2.5 shadow-sm focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 focus:outline-none"></textarea>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1">Anexar Fotos do Local (Máx: 3 fotos)</label>
+                        <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-slate-300 border-dashed rounded-xl hover:border-emerald-500 transition-colors cursor-pointer relative">
+                            <div class="space-y-1 text-center">
+                                <i data-lucide="image" class="mx-auto h-12 w-12 text-slate-400"></i>
+                                <div class="flex text-sm text-slate-600">
+                                    <label for="fotos" class="relative cursor-pointer bg-white rounded-md font-medium text-emerald-600 hover:text-emerald-500 focus-within:outline-none">
+                                        <span>Envie arquivos</span>
+                                        <input id="fotos" name="fotos[]" type="file" multiple accept="image/*" class="sr-only">
+                                    </label>
+                                    <p class="pl-1">ou arraste e solte</p>
+                                </div>
+                                <p class="text-xs text-slate-500">PNG, JPG, JPEG até 5MB cada</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col sm:flex-row justify-end gap-3 pt-4 border-t border-slate-100">
+                    <button type="submit" class="px-5 py-2.5 rounded-lg bg-emerald-600 text-white font-medium hover:bg-emerald-700 shadow-sm transition-colors flex items-center justify-center gap-2 w-full sm:w-auto">
+                        <i data-lucide="send" class="w-4 h-4"></i>
+                        Enviar Solicitação
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <div id="modal-sucesso" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+            <div class="bg-white rounded-2xl p-6 sm:p-8 max-w-md w-full shadow-xl border border-slate-100 text-center transform scale-95 transition-all animate-in fade-in zoom-in-95 duration-200">
+                <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-emerald-50 mb-4 animate-bounce">
+                    <i data-lucide="check-circle-2" class="h-10 w-10 text-emerald-600"></i>
+                </div>
+                <h3 class="text-xl font-bold text-slate-900 mb-2">Solicitação Enviada!</h3>
+                <p class="text-sm text-slate-500 mb-6">
+                    Sua demanda para a Secretaria de Meio Ambiente foi registrada com sucesso no nosso Portal de Atendimento Digital.
+                </p>
+                <button id="fechar-modal" type="button" class="w-full py-2.5 px-4 bg-emerald-600 hover:bg-emerald-700 text-white font-medium rounded-xl shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2">
+                    Entendido
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-slate-900 text-slate-400 text-center py-4 text-xs border-t border-slate-800">
+        &copy; 2026 Secretaria Municipal de Meio Ambiente. Todos os direitos reservados.
+    </footer>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        lucide.createIcons();
+
+        // Coordenadas aproximadas do centro urbano de Concórdia do Pará
+        const cidadeLat = -2.0000; 
+        const cidadeLng = -47.9500; 
+
+        const limitesMunicipio = L.latLngBounds(
+            L.latLng(cidadeLat - 0.15, cidadeLng - 0.15), 
+            L.latLng(cidadeLat + 0.15, cidadeLng + 0.15)  
+        );
+
+        const map = L.map('map', {
+            center: [cidadeLat, cidadeLng],
+            zoom: 14,
+            minZoom: 12, 
+            maxBounds: limitesMunicipio,
+            maxBoundsViscosity: 1.0 
+        });
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+
+        let marker = L.marker([cidadeLat, cidadeLng], { draggable: true }).addTo(map);
+
+        function updateInputs(lat, lng) {
+            document.getElementById('lat').value = lat.toFixed(6);
+            document.getElementById('lng').value = lng.toFixed(6);
+        }
+        
+        // Função para buscar o nome da rua/local usando a API Nominatim (OpenStreetMap)
+        function buscarEnderecoPorCoordenadas(lat, lng) {
+            const inputEndereco = document.getElementById('endereco');
+            inputEndereco.value = "Buscando endereço...";
+
+            fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data && data.display_name) {
+                        // Limpa e formata o endereço reduzindo termos longos se necessário
+                        let partes = data.address;
+                        let rua = partes.road || partes.pedestrian || partes.suburb || "Via sem nome identificável";
+                        let bairro = partes.neighbourhood || partes.suburb || "";
+                        let cidade = partes.city || partes.town || "Concórdia do Pará";
+                        
+                        inputEndereco.value = `${rua}${bairro ? ', ' + bairro : ''} - ${cidade}`;
+                    } else {
+                        inputEndereco.value = "Endereço não localizado, digite manualmente.";
+                    }
+                })
+                .catch(() => {
+                    inputEndereco.value = "Erro ao buscar endereço, digite manualmente.";
+                });
+        }
+
+        // Executa a busca inicial para o ponto centralizado padrão
+        updateInputs(cidadeLat, cidadeLng);
+        buscarEnderecoPorCoordenadas(cidadeLat, cidadeLng);
+
+        function gerenciarMarcacao(lat, lng) {
+            if (limitesMunicipio.contains([lat, lng])) {
+                marker.setLatLng([lat, lng]);
+                updateInputs(lat, lng);
+                buscarEnderecoPorCoordenadas(lat, lng);
+            } else {
+                alert("Por favor, selecione um local de ocorrência dentro dos limites do município.");
+            }
+        }
+
+        map.on('click', function(e) {
+            gerenciarMarcacao(e.latlng.lat, e.latlng.lng);
+        });
+
+        marker.on('dragend', function(e) {
+            const position = marker.getLatLng();
+            gerenciarMarcacao(position.lat, position.lng);
+        });
+
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                const userLat = position.coords.latitude;
+                const userLng = position.coords.longitude;
+                
+                if (limitesMunicipio.contains([userLat, userLng])) {
+                    map.setView([userLat, userLng], 16);
+                    marker.setLatLng([userLat, userLng]);
+                    updateInputs(userLat, userLng);
+                    buscarEnderecoPorCoordenadas(userLat, userLng);
+                }
+            });
+        }
+
+        // Lógica do Modal e Envio do Formulário
+        const modal = document.getElementById('modal-sucesso');
+        const btnFecharModal = document.getElementById('fechar-modal');
+
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            modal.classList.remove('hidden');
+            lucide.createIcons();
+
+            this.reset();
+            marker.setLatLng([cidadeLat, cidadeLng]);
+            map.setView([cidadeLat, cidadeLng], 14);
+            updateInputs(cidadeLat, cidadeLng);
+            buscarEnderecoPorCoordenadas(cidadeLat, cidadeLng);
+        });
+
+        btnFecharModal.addEventListener('click', function() {
+            modal.classList.add('hidden');
+        });
+    </script>
+</body>
+</html>
