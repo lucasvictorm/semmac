@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">   
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col">
 
@@ -16,7 +17,6 @@
 
         <div class="flex justify-between items-center">
 
-            <!-- Logo -->
             <a href="./index.html" class="flex items-center gap-3">
                 <i class="fa-solid fa-seedling text-2xl text-green-700"></i>
                 <div>
@@ -29,12 +29,10 @@
                 </div>
             </a>
 
-            <!-- Botão Mobile -->
             <button id="menuBtn" class="md:hidden text-2xl text-green-800">
                 <i class="fa-solid fa-bars"></i>
             </button>
 
-            <!-- Menu Desktop -->
             <ul class="hidden md:flex items-center gap-10">
 
                 <li>
@@ -65,7 +63,6 @@
 
         </div>
 
-        <!-- Menu Mobile -->
         <div id="mobileMenu" class="hidden md:hidden mt-6 border-t pt-4">
 
             <ul class="flex flex-col gap-4">
@@ -135,47 +132,47 @@
                         </div>
                         
                         <div>
-                            <label for="titulo" class="block text-sm font-medium text-slate-700 mb-1">Resumo do problem (Título) *</label>
+                            <label for="titulo" class="block text-sm font-medium text-slate-700 mb-1">Resumo do problema (Título) *</label>
                             <input type="text" id="titulo" name="titulo" required placeholder="Ex: Poda de árvore tocando na fiação" class="w-full rounded-lg border border-slate-200 p-2.5 shadow-sm focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 focus:outline-none">
                         </div>
                     </div>
                 </div>
 
                 <div class="space-y-4">
-    <h3 class="text-lg font-semibold text-slate-900 flex items-center gap-2 border-b pb-2 border-slate-100">
-        <i data-lucide="map-pin" class="w-5 h-5 text-emerald-600"></i>
-        2. Localização do Ocorrido
-    </h3>
-    
-    <p class="text-xs text-slate-500">Clique no mapa para marcar o local exato. O endereço será preenchido automaticamente.</p>
+                    <h3 class="text-lg font-semibold text-slate-900 flex items-center gap-2 border-b pb-2 border-slate-100">
+                        <i data-lucide="map-pin" class="w-5 h-5 text-emerald-600"></i>
+                        2. Localização do Ocorrido
+                    </h3>
+                    
+                    <p class="text-xs text-slate-500">Clique no mapa para marcar o local exato. O endereço será preenchido automaticamente.</p>
 
-    <div id="map" class="w-full h-64 rounded-xl border border-slate-200 shadow-inner z-10 cursor-crosshair"></div>
+                    <div id="map" class="w-full h-64 rounded-xl border border-slate-200 shadow-inner z-10 cursor-crosshair"></div>
 
-    <div class="space-y-4">
-        <div>
-            <label for="endereco" class="block text-sm font-medium text-slate-700 mb-1">Endereço Completo *</label>
-            <input type="text" id="endereco" name="endereco" required placeholder="Clique no mapa para identificar o endereço..." class="w-full rounded-lg border border-slate-200 p-2.5 shadow-sm bg-slate-50 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 focus:outline-none">
-        </div>
+                    <div class="space-y-4">
+                        <div>
+                            <label for="endereco" class="block text-sm font-medium text-slate-700 mb-1">Endereço Completo *</label>
+                            <input type="text" id="endereco" name="endereco" required placeholder="Clique no mapa para identificar o endereço..." class="w-full rounded-lg border border-slate-200 p-2.5 shadow-sm bg-slate-50 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 focus:outline-none">
+                        </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div class="md:col-span-2">
-                <label for="referencia" class="block text-sm font-medium text-slate-700 mb-1">Ponto de Referência *</label>
-                <input type="text" id="referencia" name="referencia" required placeholder="Ex: Próximo à padaria, em frente à escola" class="w-full rounded-lg border border-slate-200 p-2.5 shadow-sm focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 focus:outline-none">
-            </div>
-            
-            <div class="grid grid-cols-2 gap-2">
-                <div>
-                    <label class="block text-xs font-medium text-slate-500 mb-1">Latitude</label>
-                    <input type="text" id="lat" name="latitude" readonly required class="w-full rounded-lg border border-slate-100 bg-slate-50 p-2.5 text-xs text-slate-500 cursor-not-allowed">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="md:col-span-2">
+                                <label for="referencia" class="block text-sm font-medium text-slate-700 mb-1">Ponto de Referência *</label>
+                                <input type="text" id="referencia" name="referencia" required placeholder="Ex: Próximo à padaria, em frente à escola" class="w-full rounded-lg border border-slate-200 p-2.5 shadow-sm focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 focus:outline-none">
+                            </div>
+                            
+                            <div class="grid grid-cols-2 gap-2">
+                                <div>
+                                    <label class="block text-xs font-medium text-slate-500 mb-1">Latitude</label>
+                                    <input type="text" id="lat" name="latitude" readonly required class="w-full rounded-lg border border-slate-100 bg-slate-50 p-2.5 text-xs text-slate-500 cursor-not-allowed">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-medium text-slate-500 mb-1">Longitude</label>
+                                    <input type="text" id="lng" name="longitude" readonly required class="w-full rounded-lg border border-slate-100 bg-slate-50 p-2.5 text-xs text-slate-500 cursor-not-allowed">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div>
-                    <label class="block text-xs font-medium text-slate-500 mb-1">Longitude</label>
-                    <input type="text" id="lng" name="longitude" readonly required class="w-full rounded-lg border border-slate-100 bg-slate-50 p-2.5 text-xs text-slate-500 cursor-not-allowed">
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
                 <div class="space-y-4">
                     <h3 class="text-lg font-semibold text-slate-900 flex items-center gap-2 border-b pb-2 border-slate-100">
@@ -189,25 +186,25 @@
                     </div>
 
                     <div>
-    <label class="block text-sm font-medium text-slate-700 mb-1">Anexar Fotos do Local (Máx: 3 fotos)</label>
-    
-    <label for="fotos" class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-slate-300 border-dashed rounded-xl hover:border-emerald-500 transition-colors cursor-pointer relative block">
-        <div class="space-y-1 text-center">
-            <i data-lucide="image" class="mx-auto h-12 w-12 text-slate-400"></i>
-            
-            <div class="flex text-sm text-slate-600 justify-center">
-                <span class="font-medium text-emerald-600 hover:text-emerald-500">
-                    Envie arquivos
-                </span>
-                <p class="pl-1">ou arraste e solte</p>
-                
-                <input id="fotos" name="fotos[]" type="file" multiple accept="image/*" class="sr-only">
-            </div>
-            
-            <p class="text-xs text-slate-500">PNG, JPG, JPEG até 5MB cada</p>
-        </div>
-    </label>
-</div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1">Anexar Fotos do Local (Máx: 3 fotos)</label>
+                        
+                        <label for="fotos" class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-slate-300 border-dashed rounded-xl hover:border-emerald-500 transition-colors cursor-pointer relative block">
+                            <div class="space-y-1 text-center">
+                                <i data-lucide="image" class="mx-auto h-12 w-12 text-slate-400"></i>
+                                
+                                <div class="flex text-sm text-slate-600 justify-center">
+                                    <span class="font-medium text-emerald-600 hover:text-emerald-500">
+                                        Envie arquivos
+                                    </span>
+                                    <p class="pl-1">ou arraste e solte</p>
+                                    
+                                    <input id="fotos" name="fotos[]" type="file" multiple accept="image/*" class="sr-only">
+                                </div>
+                                
+                                <p class="text-xs text-slate-500">PNG, JPG, JPEG até 5MB cada</p>
+                            </div>
+                        </label>
+                    </div>
                 </div>
 
                 <div class="flex flex-col sm:flex-row justify-end gap-3 pt-4 border-t border-slate-100">
@@ -225,8 +222,12 @@
                     <i data-lucide="check-circle-2" class="h-10 w-10 text-emerald-600"></i>
                 </div>
                 <h3 class="text-xl font-bold text-slate-900 mb-2">Solicitação Enviada!</h3>
-                <p class="text-sm text-slate-500 mb-6">
-                    Sua demanda para a Secretaria de Meio Ambiente foi registrada com sucesso no nosso Portal de Atendimento Digital.
+                <p class="text-sm text-slate-500 mb-1">
+                    Sua demanda para a Secretaria de Meio Ambiente foi registrada com sucesso.
+                </p>
+                <p class="text-sm font-semibold text-emerald-700 mb-6">
+                    Protocolo: <span id="num-protocolo"></span><br>
+                    <span class="text-xs text-slate-400 font-normal">(O comprovante em PDF foi baixado automaticamente)</span>
                 </p>
                 <button id="fechar-modal" type="button" class="w-full py-2.5 px-4 bg-emerald-600 hover:bg-emerald-700 text-white font-medium rounded-xl shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2">
                     Entendido
@@ -264,7 +265,6 @@
             attribution: '&copy; OpenStreetMap contributors'
         }).addTo(map);
 
-        // O marcador inicia nulo
         let marker = null;
 
         function updateInputs(lat, lng) {
@@ -272,7 +272,6 @@
             document.getElementById('lng').value = lng.toFixed(6);
         }
         
-        // Função para buscar o nome da rua/local usando a API Nominatim (OpenStreetMap)
         function buscarEnderecoPorCoordenadas(lat, lng) {
             const inputEndereco = document.getElementById('endereco');
             inputEndereco.value = "Buscando endereço no mapa... ⏳";
@@ -281,7 +280,6 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data && data.display_name) {
-                        // Limpa e formata o endereço reduzindo termos longos se necessário
                         let partes = data.address;
                         let rua = partes.road || partes.pedestrian || partes.suburb || "Via sem nome identificável";
                         let bairro = partes.neighbourhood || partes.suburb || "";
@@ -299,7 +297,6 @@
 
         function gerenciarMarcacao(lat, lng) {
             if (limitesMunicipio.contains([lat, lng])) {
-                // Cria o marcador se não existir, ou atualiza a posição se já existir
                 if (!marker) {
                     marker = L.marker([lat, lng], { draggable: true }).addTo(map);
                     
@@ -322,7 +319,6 @@
             gerenciarMarcacao(e.latlng.lat, e.latlng.lng);
         });
 
-        // Geolocalização Automática - Apenas centraliza a câmera
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function(position) {
                 const userLat = position.coords.latitude;
@@ -334,23 +330,115 @@
             });
         }
 
-        // Lógica do Modal e Envio do Formulário
+        // Lógica de Geração do PDF e Controle do Envio
         const modal = document.getElementById('modal-sucesso');
         const btnFecharModal = document.getElementById('fechar-modal');
 
         document.querySelector('form').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Trava de segurança: obriga o usuário a marcar o mapa
             if(!marker) {
                 alert("Por favor, clique no mapa para identificar a localização do serviço antes de enviar.");
                 return;
             }
+
+            // 1. Gerar Protocolo Aleatório (Formato: ANO-XXXXXX)
+            const randomId = Math.floor(100000 + Math.random() * 900000);
+            const dataAtual = new Date();
+            const anoAtual = dataAtual.getFullYear();
+            const protocolo = `${anoAtual}-${randomId}`;
+
+            // Exibir no modal
+            document.getElementById('num-protocolo').innerText = protocolo;
+
+            // 2. Coleta de dados estruturados para o PDF
+            const campoServico = document.getElementById('tipo_servico');
+            const servicoTexto = campoServico.options[campoServico.selectedIndex].text;
+            const titulo = document.getElementById('titulo').value;
+            const endereco = document.getElementById('endereco').value;
+            const referencia = document.getElementById('referencia').value;
+            const latitude = document.getElementById('lat').value;
+            const longitude = document.getElementById('lng').value;
+            const descricao = document.getElementById('descricao').value;
+            const dataFormatada = dataAtual.toLocaleDateString('pt-BR') + ' ' + dataAtual.toLocaleTimeString('pt-BR');
+
+            // 3. Montar e estruturar o PDF com jsPDF
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            // Layout do PDF - Cabeçalho estilizado
+            doc.setFillColor(15, 23, 42); // slate-900
+            doc.rect(0, 0, 210, 40, 'F');
             
+            doc.setTextColor(255, 255, 255);
+            doc.setFont('Helvetica', 'bold');
+            doc.setFontSize(16);
+            doc.text("PREFEITURA MUNICIPAL DE CONCÓRDIA DO PARÁ", 15, 18);
+            doc.setFontSize(12);
+            doc.setFont('Helvetica', 'normal');
+            doc.text("Secretaria Municipal de Meio Ambiente", 15, 26);
+            doc.setFontSize(10);
+            doc.text(`Gerado em: ${dataFormatada}`, 15, 33);
+
+            // Corpo do Documento
+            doc.setTextColor(30, 41, 59); // text-slate-800
+            doc.setFont('Helvetica', 'bold');
+            doc.setFontSize(14);
+            doc.text("COMPROVANTE DE SOLICITAÇÃO DIGITAL", 15, 55);
+
+            // Bloco de Destaque do Protocolo
+            doc.setFillColor(241, 245, 249); // bg-slate-100
+            doc.rect(15, 62, 180, 15, 'F');
+            doc.setFontSize(11);
+            doc.text(`NÚMERO DE PROTOCOLO: ${protocolo}`, 20, 71);
+
+            // Informações da Demanda
+            doc.setFont('Helvetica', 'bold');
+            doc.text("1. Detalhes da Solicitação", 15, 90);
+            doc.setLineWidth(0.2);
+            doc.line(15, 92, 195, 92);
+
+            doc.setFont('Helvetica', 'normal');
+            doc.text(`Tipo de Serviço: ${servicoTexto}`, 15, 100);
+            doc.text(`Título do Resumo: ${titulo}`, 15, 108);
+
+            // Localização
+            doc.setFont('Helvetica', 'bold');
+            doc.text("2. Localização da Ocorrência", 15, 123);
+            doc.line(15, 125, 195, 125);
+
+            doc.setFont('Helvetica', 'normal');
+            // Quebra automática de linhas para o endereço caso seja muito extenso
+            const enderecoLinhas = doc.splitTextToSize(`Endereço: ${endereco}`, 180);
+            doc.text(enderecoLinhas, 15, 133);
+            
+            // Avança a altura base baseado no tamanho do endereço dinâmico
+            let currentY = 133 + (enderecoLinhas.length * 6);
+            doc.text(`Referência: ${referencia}`, 15, currentY);
+            doc.text(`Coordenadas Geográficas: Lat ${latitude} / Lng ${longitude}`, 15, currentY + 7);
+
+            // Descrição Detalhada
+            currentY += 20;
+            doc.setFont('Helvetica', 'bold');
+            doc.text("3. Relato do Cidadão", 15, currentY);
+            doc.line(15, currentY + 2, 195, currentY + 2);
+
+            doc.setFont('Helvetica', 'normal');
+            const descricaoLinhas = doc.splitTextToSize(descricao, 180);
+            doc.text(descricaoLinhas, 15, currentY + 10);
+
+            // Rodapé do PDF
+            doc.setFontSize(9);
+            doc.setTextColor(148, 163, 184);
+            doc.text("Este é um documento oficial emitido eletronicamente. Guarde este número para futuras consultas.", 15, 280);
+
+            // Disparar download automático do PDF gerado
+            doc.save(`protocolo-meio-ambiente-${protocolo}.pdf`);
+
+            // 4. Mostrar modal de sucesso e resetar interface
             modal.classList.remove('hidden');
             lucide.createIcons();
 
-            // Reseta formulário e mapa
             this.reset();
             
             if(marker) {
@@ -369,15 +457,15 @@
     </script>
 
     <script>
-const menuBtn = document.getElementById("menuBtn");
-const mobileMenu = document.getElementById("mobileMenu");
-const icon = menuBtn.querySelector("i");
+        const menuBtn = document.getElementById("menuBtn");
+        const mobileMenu = document.getElementById("mobileMenu");
+        const icon = menuBtn.querySelector("i");
 
-menuBtn.addEventListener("click", () => {
-    mobileMenu.classList.toggle("hidden");
-    icon.classList.toggle("fa-bars");
-    icon.classList.toggle("fa-xmark");
-});
-</script>
+        menuBtn.addEventListener("click", () => {
+            mobileMenu.classList.toggle("hidden");
+            icon.classList.toggle("fa-bars");
+            icon.classList.toggle("fa-xmark");
+        });
+    </script>
 </body>
 </html>

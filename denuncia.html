@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     
     <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col">
 
@@ -217,10 +218,18 @@
                 <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-emerald-50 mb-4 animate-bounce">
                     <i data-lucide="check-circle-2" class="h-10 w-10 text-emerald-600"></i>
                 </div>
-                <h3 class="text-xl font-bold text-slate-900 mb-2">Denúncia Registrada!</h3>
-                <p class="text-sm text-slate-500 mb-6">
-                    Sua demanda para a Secretaria de Meio Ambiente foi registrada com sucesso no nosso Portal de Atendimento Digital. Garantimos total sigilo das informações.
-                </p>
+               <h3 class="text-xl font-bold text-slate-900 mb-2">Denúncia Registrada!</h3>
+
+<p class="text-sm text-slate-500 mb-1">
+    Sua denúncia foi registrada com sucesso.
+</p>
+
+<p class="text-sm font-semibold text-emerald-700 mb-6">
+    Protocolo: <span id="num-protocolo"></span><br>
+    <span class="text-xs text-slate-400 font-normal">
+        (O comprovante em PDF foi baixado automaticamente)
+    </span>
+</p>
                 <button id="fechar-modal" type="button" class="w-full py-2.5 px-4 bg-emerald-600 hover:bg-emerald-700 text-white font-medium rounded-xl shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2">
                     Entendido
                 </button>
@@ -372,32 +381,134 @@
         const btnFecharModal = document.getElementById('fechar-modal');
 
         document.getElementById('denunciaForm').addEventListener('submit', function(e) {
-            e.preventDefault(); // Impede o recarregamento da página para demonstração
-            
-            // Verifica se o usuário selecionou um local (garantia adicional de segurança)
-            if(!marker) {
-                alert("Por favor, clique no mapa para identificar a localização da denúncia antes de enviar.");
-                return;
-            }
+    e.preventDefault();
 
-            // Exibe o modal
-            modal.classList.remove('hidden');
-            lucide.createIcons(); // Recarrega ícones caso necessário
+    if (!marker) {
+        alert("Por favor, clique no mapa para identificar a localização da denúncia antes de enviar.");
+        return;
+    }
 
-            // Reseta o formulário
-            this.reset();
-            previewContainer.innerHTML = ''; // Limpa as fotos
-            
-            // Reseta o mapa e remove o marcador para o estado inicial
-            if(marker) {
-                map.removeLayer(marker);
-                marker = null;
-            }
-            map.setView([cidadeLat, cidadeLng], 14);
-            document.getElementById('endereco').value = '';
-            document.getElementById('lat').value = '';
-            document.getElementById('lng').value = '';
-        });
+    // Protocolo
+    const randomId = Math.floor(100000 + Math.random() * 900000);
+    const dataAtual = new Date();
+    const protocolo = `${dataAtual.getFullYear()}-${randomId}`;
+
+    document.getElementById("num-protocolo").innerText = protocolo;
+
+    // Dados do formulário
+    const campoTipo = document.getElementById("tipo_denuncia");
+    const tipoTexto = campoTipo.options[campoTipo.selectedIndex].text;
+
+    const endereco = document.getElementById("endereco").value;
+    const referencia = document.getElementById("referencia").value;
+    const latitude = document.getElementById("lat").value;
+    const longitude = document.getElementById("lng").value;
+    const descricao = document.getElementById("descricao").value;
+
+    const dataFormatada =
+        dataAtual.toLocaleDateString("pt-BR") +
+        " " +
+        dataAtual.toLocaleTimeString("pt-BR");
+
+    // PDF
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    // Cabeçalho
+    doc.setFillColor(15, 23, 42);
+    doc.rect(0, 0, 210, 40, "F");
+
+    doc.setTextColor(255,255,255);
+    doc.setFont("Helvetica","bold");
+    doc.setFontSize(16);
+    doc.text("PREFEITURA MUNICIPAL DE CONCÓRDIA DO PARÁ",15,18);
+
+    doc.setFontSize(12);
+    doc.setFont("Helvetica","normal");
+    doc.text("Secretaria Municipal de Meio Ambiente",15,26);
+
+    doc.setFontSize(10);
+    doc.text(`Gerado em: ${dataFormatada}`,15,33);
+
+    // Corpo
+    doc.setTextColor(30,41,59);
+    doc.setFont("Helvetica","bold");
+    doc.setFontSize(14);
+    doc.text("COMPROVANTE DE REGISTRO DE DENÚNCIA",15,55);
+
+    doc.setFillColor(241,245,249);
+    doc.rect(15,62,180,15,"F");
+
+    doc.setFontSize(11);
+    doc.text(`NÚMERO DE PROTOCOLO: ${protocolo}`,20,71);
+
+    doc.setFont("Helvetica","bold");
+    doc.text("1. Dados da Denúncia",15,90);
+    doc.line(15,92,195,92);
+
+    doc.setFont("Helvetica","normal");
+    doc.text(`Tipo de Infração: ${tipoTexto}`,15,100);
+
+    doc.setFont("Helvetica","bold");
+    doc.text("2. Local da Ocorrência",15,115);
+    doc.line(15,117,195,117);
+
+    doc.setFont("Helvetica","normal");
+
+    const enderecoLinhas = doc.splitTextToSize(
+        `Endereço: ${endereco}`,
+        180
+    );
+
+    doc.text(enderecoLinhas,15,125);
+
+    let currentY = 125 + enderecoLinhas.length * 6;
+
+    doc.text(`Referência: ${referencia}`,15,currentY);
+    doc.text(
+        `Coordenadas: Lat ${latitude} / Lng ${longitude}`,
+        15,
+        currentY + 7
+    );
+
+    currentY += 20;
+
+    doc.setFont("Helvetica","bold");
+    doc.text("3. Relato da Denúncia",15,currentY);
+    doc.line(15,currentY+2,195,currentY+2);
+
+    doc.setFont("Helvetica","normal");
+
+    const descricaoLinhas = doc.splitTextToSize(descricao,180);
+    doc.text(descricaoLinhas,15,currentY+10);
+
+    doc.setFontSize(9);
+    doc.setTextColor(148,163,184);
+    doc.text(
+        "Este é um comprovante eletrônico de registro de denúncia ambiental.",
+        15,
+        280
+    );
+
+    doc.save(`protocolo-denuncia-${protocolo}.pdf`);
+
+    // Modal
+    modal.classList.remove("hidden");
+    lucide.createIcons();
+
+    this.reset();
+
+    if (marker) {
+        map.removeLayer(marker);
+        marker = null;
+    }
+
+    map.setView([cidadeLat, cidadeLng], 14);
+
+    document.getElementById("endereco").value = "";
+    document.getElementById("lat").value = "";
+    document.getElementById("lng").value = "";
+});
 
         // Fechar Modal
         btnFecharModal.addEventListener('click', function() {
