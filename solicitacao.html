@@ -12,10 +12,11 @@
 <body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col">
 
     <header class="bg-white shadow-sm sticky top-0 z-50 border-b border-gray-200">
-    <nav class="max-w-5xl mx-auto px-4 py-4">
+    <nav class="max-w-6xl mx-auto px-4 py-4">
 
         <div class="flex justify-between items-center">
 
+            <!-- Logo -->
             <a href="./index.html" class="flex items-center gap-3">
                 <i class="fa-solid fa-seedling text-2xl text-green-700"></i>
                 <div>
@@ -28,32 +29,34 @@
                 </div>
             </a>
 
+            <!-- Botão Mobile -->
             <button id="menuBtn" class="md:hidden text-2xl text-green-800">
                 <i class="fa-solid fa-bars"></i>
             </button>
 
+            <!-- Menu Desktop -->
             <ul class="hidden md:flex items-center gap-10">
 
                 <li>
                     <a href="./mapa.html"
                         class="flex flex-col items-center text-center text-gray-600 hover:text-green-700 transition group">
-                        <i class="fa-solid fa-map-location-dot text-2xl mb-2 group-hover:scale-110 transition-transform"></i>
+                        <i class="fa-solid fa-map-location-dot text-2xl mb-2"></i>
                         <span class="font-semibold">Coleta de Lixo</span>
                     </a>
                 </li>
 
                 <li>
-                    <a href="./solicitacao.html"
+                    <a href="./TelaLogin.html"
                         class="flex flex-col items-center text-center text-gray-600 hover:text-green-700 transition group">
-                        <i class="fa-solid fa-file-signature text-2xl mb-2 group-hover:scale-110 transition-transform"></i>
+                        <i class="fa-solid fa-file-signature text-2xl mb-2"></i>
                         <span class="font-semibold">Pedir Serviços</span>
                     </a>
                 </li>
 
                 <li>
                     <a href="./denuncia.html"
-                        class="flex flex-col items-center text-center text-red-600 transition group">
-                        <i class="fa-solid fa-bullhorn text-2xl mb-2 group-hover:scale-110 transition-transform"></i>
+                        class="flex flex-col items-center text-center text-gray-600 hover:text-red-600 transition group">
+                        <i class="fa-solid fa-bullhorn text-2xl mb-2"></i>
                         <span class="font-semibold">Denúncias</span>
                     </a>
                 </li>
@@ -62,6 +65,7 @@
 
         </div>
 
+        <!-- Menu Mobile -->
         <div id="mobileMenu" class="hidden md:hidden mt-6 border-t pt-4">
 
             <ul class="flex flex-col gap-4">
@@ -75,7 +79,7 @@
                 </li>
 
                 <li>
-                    <a href="./solicitacao.html"
+                    <a href="./TelaLogin.html"
                         class="flex items-center gap-3 p-3 rounded-lg hover:bg-green-50">
                         <i class="fa-solid fa-file-signature text-green-700"></i>
                         Solicitações
@@ -84,8 +88,8 @@
 
                 <li>
                     <a href="./denuncia.html"
-                        class="flex items-center gap-3 p-3 rounded-lg bg-red-50 text-red-600 rounded-lg">
-                        <i class="fa-solid fa-bullhorn"></i>
+                        class="flex items-center gap-3 p-3 rounded-lg hover:bg-red-50">
+                        <i class="fa-solid fa-bullhorn text-red-600"></i>
                         Denúncias
                     </a>
                 </li>
